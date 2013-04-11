@@ -10,16 +10,16 @@ class HungarianDateExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'hungarian_date' => new \Twig_SimpleFilter(
+            'hungarian_date' => new \Twig_Filter_Method(
                 $this, 'toHungarianDate'
             ),
-            'hungarian_date_tag' => new \Twig_SimpleFilter(
+            'hungarian_date_tag' => new \Twig_Filter_Method(
                 $this, 'toHungarianDateWithHtml', array('is_safe' => array('html'))
             ),
-            'hungarian_datetime' => new \Twig_SimpleFilter(
+            'hungarian_datetime' => new \Twig_Filter_Method(
                 $this, 'toHungarianDateTime'
             ),
-            'hungarian_datetime_tag' => new \Twig_SimpleFilter(
+            'hungarian_datetime_tag' => new \Twig_Filter_Method(
                 $this, 'toHungarianDateTimeWithHtml', array('is_safe' => array('html'))
             ),
         );
