@@ -5,6 +5,21 @@ namespace SPE\HungarianDateExtensionBundle\Twig;
 class HungarianDateExtension extends \Twig_Extension
 {
     /**
+     * @var array $months
+     */
+    private static $months = array(
+        'január', 'február', 'március', 'április', 'május', 'június', 'július',
+        'augusztus', 'szeptember', 'október', 'november', 'december',
+    );
+
+    /**
+     * @var array $days
+     */
+    private static $days = array(
+        'vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat',
+    );
+
+    /**
      * @return array
      */
     public function getFilters()
@@ -39,10 +54,12 @@ class HungarianDateExtension extends \Twig_Extension
      */
     public function toHungarianDate(\DateTime $date)
     {
-        // 2012. December  2.
-        $format = '%G. %B %e.';
+        $year = $date->format('Y');
+        $month = self::$months[ $date->format('n') - 1 ];
+        $day = $date->format('j');
 
-        return $this->formatHungarianDate($date, $format);
+        // 2012. december  2.
+        return $year . '. ' . $month . ' ' . $day . '.';
     }
 
     /**
@@ -62,10 +79,11 @@ class HungarianDateExtension extends \Twig_Extension
      */
     public function toHungarianDateTime(\DateTime $date)
     {
-        // 2012. December  2. Vasárnap 15:16
-        $format = '%G. %B %e. %A %k:%M';
+        $dayInText = self::$days[ $date->format('w') ];
+        $time = $date->format('G:i');
 
-        return $this->formatHungarianDate($date, $format);
+        // 2012. december  2. vasárnap 15:16
+        return $this->toHungarianDate($date) . ' ' . $dayInText . ' ' . $time;
     }
 
     /**
@@ -77,56 +95,5 @@ class HungarianDateExtension extends \Twig_Extension
         $formatedDate = $this->toHungarianDateTime($date);
 
         return '<time title="' . $formatedDate . '">' . $formatedDate . '</time>';
-    }
-
-
-    /**
-     * @param DateTime $date
-     * @param string $format
-     * @return string
-     */
-    private function formatHungarianDate(\DateTime $date, $format)
-    {
-        $formatedDate = $this->formatDate($date, $format, 'hu_HU');
-
-        // a magyar honapneveket kisbetuvel kell irni
-        $formatedDate = $this->toLower($formatedDate);
-
-        return $this->removeExtraSpace($formatedDate);
-    }
-
-    /**
-     * @param DateTime $date
-     * @param string $format
-     * @param string $locale = 'hu_HU'
-     * @return string
-     */
-    private function formatDate(\DateTime $date, $format, $locale = 'hu_HU')
-    {
-        $prevLocale = setlocale(LC_TIME, 0);
-
-        setlocale(LC_TIME, $locale);
-        $formatedDate = strftime($format, $date->getTimestamp());
-        setlocale(LC_TIME, $prevLocale);
-
-        return $formatedDate;
-    }
-
-    /**
-     * @param string $str
-     * @return string
-     */
-    private function removeExtraSpace($str)
-    {
-        return preg_replace('/[ ]{2,}/', ' ', $str);
-    }
-
-    /**
-     * @param string $str
-     * @return string
-     */
-    private function toLower($str)
-    {
-        return mb_strtolower($str, 'UTF-8');
     }
 }
