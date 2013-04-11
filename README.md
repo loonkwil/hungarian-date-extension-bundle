@@ -23,6 +23,15 @@ composer.json fájlba:
 php composer.phar update
 ```
 
+app/AppKernel.php fájlba:
+```php
+$bundles = array(
+    // ...
+    new SPE\HungarianDateExtensionBundle\SPEHungarianDateExtensionBundle(),
+    // ...
+);
+```
+
 ## Használata
 
 ```twig
