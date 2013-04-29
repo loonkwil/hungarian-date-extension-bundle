@@ -26,6 +26,23 @@ class HungarianDateExtensionTest extends \PHPUnit_Framework_TestCase
             '2012. december 2.',
             $this->hde->toHungarianDate(new \DateTime('2012-12-02'))
         );
+
+        // unix timestamp elfogadasa
+        $this->assertEquals(
+            '2012. december 2.',
+            $this->hde->toHungarianDate(strtotime('2012-12-02'))
+        );
+
+        $this->assertEquals(
+            '2012. december 2.',
+            $this->hde->toHungarianDate((string)strtotime('2012-12-02'))
+        );
+
+        // string-ben megadott datum elfogadasa
+        $this->assertEquals(
+            '2012. december 2.',
+            $this->hde->toHungarianDate('2012-12-02')
+        );
     }
 
     public function testToHungarianDateWithHtml()
@@ -40,6 +57,23 @@ class HungarianDateExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             '<time title="2012. december 2. vasárnap 15:16">2012. december 2.</time>',
             $this->hde->toHungarianDateWithHtml(new \DateTime('2012-12-02 15:16'))
+        );
+
+        // unix timestamp elfogadasa
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2.</time>',
+            $this->hde->toHungarianDateWithHtml(strtotime('2012-12-02 15:16'))
+        );
+
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2.</time>',
+            $this->hde->toHungarianDateWithHtml((string)strtotime('2012-12-02 15:16'))
+        );
+
+        // string-ben megadott datum elfogadasa
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2.</time>',
+            $this->hde->toHungarianDateWithHtml('2012-12-02 15:16')
         );
     }
 
@@ -56,6 +90,23 @@ class HungarianDateExtensionTest extends \PHPUnit_Framework_TestCase
             '2012. augusztus 8. szerda 6:05',
             $this->hde->toHungarianDateTime(new \DateTime('2012-08-08 06:05'))
         );
+
+        // unix timestamp elfogadasa
+        $this->assertEquals(
+            '2012. december 2. vasárnap 15:16',
+            $this->hde->toHungarianDateTime(strtotime('2012-12-02 15:16'))
+        );
+
+        $this->assertEquals(
+            '2012. december 2. vasárnap 15:16',
+            $this->hde->toHungarianDateTime((string)strtotime('2012-12-02 15:16'))
+        );
+
+        // string-ben megadott datum elfogadasa
+        $this->assertEquals(
+            '2012. december 2. vasárnap 15:16',
+            $this->hde->toHungarianDateTime('2012-12-02 15:16')
+        );
     }
 
     public function testToHungarianDateTimeWithHtml()
@@ -70,6 +121,23 @@ class HungarianDateExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             '<time title="2012. augusztus 8. szerda 6:05">2012. augusztus 8. szerda 6:05</time>',
             $this->hde->toHungarianDateTimeWithHtml(new \DateTime('2012-08-08 06:05'))
+        );
+
+        // unix timestamp elfogadasa
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2. vasárnap 15:16</time>',
+            $this->hde->toHungarianDateTimeWithHtml(strtotime('2012-12-02 15:16'))
+        );
+
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2. vasárnap 15:16</time>',
+            $this->hde->toHungarianDateTimeWithHtml((string)strtotime('2012-12-02 15:16'))
+        );
+
+        // string-ben megadott datum elfogadasa
+        $this->assertEquals(
+            '<time title="2012. december 2. vasárnap 15:16">2012. december 2. vasárnap 15:16</time>',
+            $this->hde->toHungarianDateTimeWithHtml('2012-12-02 15:16')
         );
     }
 }

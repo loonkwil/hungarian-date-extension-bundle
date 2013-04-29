@@ -49,11 +49,13 @@ class HungarianDateExtension extends \Twig_Extension
     }
 
     /**
-     * @param DateTime $date
+     * @param string|integer|DateTime $date
      * @return string
      */
-    public function toHungarianDate(\DateTime $date)
+    public function toHungarianDate($date)
     {
+        $date = $this->toDateTime($date);
+
         $year = $date->format('Y');
         $month = self::$months[ $date->format('n') - 1 ];
         $day = $date->format('j');
@@ -63,22 +65,26 @@ class HungarianDateExtension extends \Twig_Extension
     }
 
     /**
-     * @param DateTime $date
+     * @param string|integer|DateTime $date
      * @return string
      */
-    public function toHungarianDateWithHtml(\DateTime $date)
+    public function toHungarianDateWithHtml($date)
     {
+        $date = $this->toDateTime($date);
+
         return '<time title="' . $this->toHungarianDateTime($date) . '">' .
             $this->toHungarianDate($date) .
             '</time>';
     }
 
     /**
-     * @param DateTime $date
+     * @param string|integer|DateTime $date
      * @return string
      */
-    public function toHungarianDateTime(\DateTime $date)
+    public function toHungarianDateTime($date)
     {
+        $date = $this->toDateTime($date);
+
         $dayInText = self::$days[ $date->format('w') ];
         $time = $date->format('G:i');
 
@@ -87,13 +93,34 @@ class HungarianDateExtension extends \Twig_Extension
     }
 
     /**
-     * @param DateTime $date
+     * @param string|integer|DateTime $date
      * @return string
      */
-    public function toHungarianDateTimeWithHtml(\DateTime $date)
+    public function toHungarianDateTimeWithHtml($date)
     {
+        $date = $this->toDateTime($date);
+
         $formatedDate = $this->toHungarianDateTime($date);
 
         return '<time title="' . $formatedDate . '">' . $formatedDate . '</time>';
+    }
+
+
+    /**
+     * @param string|integer|DateTime $date
+     * @return DateTime
+     */
+    protected function toDateTime($date)
+    {
+        if( $date instanceof \DateTime ) {
+            return $date;
+        }
+
+        if( is_numeric($date) ) {
+            $now = new \DateTime();
+            return $now->setTimestamp($date);
+        }
+
+        return new \DateTime($date);
     }
 }
