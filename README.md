@@ -23,6 +23,8 @@ composer.json fájlba:
 php composer.phar update
 ```
 
+### Symfony 2.x
+
 app/AppKernel.php fájlba:
 ```php
 $bundles = array(
@@ -30,6 +32,18 @@ $bundles = array(
     new SPE\HungarianDateExtensionBundle\SPEHungarianDateExtensionBundle(),
     // ...
 );
+```
+
+### Silex
+
+```php
+use SPE\HungarianDateExtensionBundle\Twig\HungarianDateExtension;
+
+$app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+    $twig->addExtension(new HungarianDateExtension());
+
+    return $twig;
+}));
 ```
 
 ## Használata
