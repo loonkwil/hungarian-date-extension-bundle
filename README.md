@@ -15,7 +15,7 @@ composer.json fájlba:
     },
 ],
 "require": {
-    "spe/hungarian-date-extension-bundle": "dev-master",
+    "spe/hungarian-date-extension-bundle": "~1.0.0",
 }
 ```
 
@@ -23,7 +23,7 @@ composer.json fájlba:
 php composer.phar update
 ```
 
-### Symfony 2.x
+### Symfony 2.x, 3.x
 
 app/AppKernel.php fájlba:
 ```php
