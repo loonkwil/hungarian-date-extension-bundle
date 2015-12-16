@@ -1,6 +1,7 @@
 {
     "name": "spe/hungarian-date-extension-bundle",
     "description": "Twig filterek a dátumok magyar nyelven történő megjelenítésére",
+    "version": "1.0.0",
     "homepage": "https://github.com/loonkwil/hungarian-date-extension-bundle",
     "type": "symfony-bundle",
     "repositories": [
